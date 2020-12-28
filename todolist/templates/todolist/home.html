@@ -5,7 +5,10 @@
     <title>To Do | Home</title>
 </head>
 <body>
-
+    <a href="{% url 'to_dos' %}">Current ToDo's</a>
+    <a href="{% url 'create_to_dos' %}">Create ToDo</a>
+    <a href="{% url 'completed_to_dos' %}">Completed ToDo's</a>
+    <br>
     {% if user.is_authenticated %}
         Logged in as {{ user.username }} <br>
          <form action="{% url 'user_logout' %}" method="POST">

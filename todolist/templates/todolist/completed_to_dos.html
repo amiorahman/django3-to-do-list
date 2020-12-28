@@ -1,0 +1,33 @@
+{% extends 'todolist/home.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do | Completed</title>
+</head>
+<body>
+    {% csrf_token %}
+    <ul>
+    {% for todo in todos %}
+        <li>
+            <a href="{% url 'view_to_do' todo.id %}">
+                {% if todo.importance %}
+                    <b>
+                {% endif %}
+                {{ todo.title }}
+                {% if todo.importance %}
+                    </b>
+                {% endif %}
+                {% if todo.details %}
+                    - {{ todo.details}}
+                {% endif %}
+                {{ todo.date_completed|date:'M j Y H:i' }}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
+
+{% endblock %}

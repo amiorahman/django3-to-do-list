@@ -6,6 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import TodoForm
 from .models import Todo
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -44,6 +45,7 @@ def user_sign_up(request):
                                                                                                        'long'})
 
 
+@login_required
 def user_logout(request):
     if request.method == 'POST':
         logout(request)
@@ -64,11 +66,19 @@ def user_login(request):
             return redirect('to_dos')
 
 
+@login_required
 def to_dos(request):
     todos = Todo.objects.filter(user=request.user, date_completed__isnull=True)
     return render(request, 'todolist/to_dos.html', {'todos': todos})
 
 
+@login_required
+def completed_to_dos(request):
+    todos = Todo.objects.filter(user=request.user, date_completed__isnull=False).order_by('-date_completed')
+    return render(request, 'todolist/completed_to_dos.html', {'todos': todos})
+
+
+@login_required
 def create_to_dos(request):
     if request.method == 'GET':
         return render(request, 'todolist/create_to_dos.html', {'form': TodoForm()})
@@ -85,6 +95,7 @@ def create_to_dos(request):
                                                                                                 'characters'})
 
 
+@login_required
 def view_to_do(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'GET':
@@ -100,6 +111,7 @@ def view_to_do(request, todo_pk):
                                                                                                      'parsing data!'})
 
 
+@login_required
 def complete_to_do(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
@@ -108,6 +120,7 @@ def complete_to_do(request, todo_pk):
         return redirect('to_dos')
 
 
+@login_required
 def delete_to_do(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
