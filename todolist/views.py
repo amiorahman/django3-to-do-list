@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from .forms import TodoForm
+from .models import Todo
 
 
 def home(request):
@@ -63,7 +64,8 @@ def user_login(request):
 
 
 def to_dos(request):
-    return render(request, 'todolist/to_dos.html')
+    todos = Todo.objects.filter(user=request.user, date_completed__isnull=True)
+    return render(request, 'todolist/to_dos.html', {'todos': todos})
 
 
 def create_to_dos(request):
