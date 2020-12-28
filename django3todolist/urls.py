@@ -28,4 +28,5 @@ urlpatterns = [
 
     # ToDo's
     path('todos/', views.to_dos, name='to_dos'),
+    path('create/', views.create_to_dos, name='create_to_dos'),
 ]

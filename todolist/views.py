@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from .forms import TodoForm
 
 
 def home(request):
@@ -63,3 +64,19 @@ def user_login(request):
 
 def to_dos(request):
     return render(request, 'todolist/to_dos.html')
+
+
+def create_to_dos(request):
+    if request.method == 'GET':
+        return render(request, 'todolist/create_to_dos.html', {'form': TodoForm()})
+    else:
+        try:
+            form = TodoForm(request.POST)
+            new_todo = form.save(commit=False)
+            new_todo.user = request.user
+            new_todo.save()
+            return redirect('to_dos')
+        except ValueError:
+            return render(request, 'todolist/create_to_dos.html', {'form': TodoForm(), 'error': 'Title can not be '
+                                                                                                'more than 100 '
+                                                                                                'characters'})
