@@ -1,0 +1,21 @@
+{% extends 'todolist/home.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do | To Do</title>
+</head>
+<body>
+    {{ error }}
+    {{ todo.title }}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
+
+{% endblock %}
