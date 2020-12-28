@@ -5,14 +5,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>To Do | Sign Up</title>
+    <title>To Do | Login</title>
 </head>
 <body>
     <h3>{{ error }}</h3>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Sign Up!</button>
+        <button type="submit">Login</button>
     </form>
 </body>
 </html>

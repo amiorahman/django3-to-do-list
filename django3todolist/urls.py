@@ -23,6 +23,8 @@ urlpatterns = [
 
     # Authentication
     path('signup/', views.user_sign_up, name='user_sign_up'),
+    path('logout/', views.user_logout, name='user_logout'),
+    path('login/', views.user_login, name='user_login'),
 
     # ToDo's
     path('todos/', views.to_dos, name='to_dos'),
